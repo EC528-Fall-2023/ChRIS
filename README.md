@@ -7,7 +7,7 @@
 3. [Scope and Features of the Project](#3-scope-and-features-of-the-project)
 4. [Solution Concept](#4-solution-concept)
    - [Global Architecture of the Project](#global-architecture-of-the-project)
-   - [Observability Stack Components](#observability-stack-components)
+   - [Development of Observability Stack](#development-of-observability-stack)
    - [Deployment on the New England Research Cloud (NERC)](#deployment-on-the-new-england-research-cloud-nerc)
    - [Design Implications and Discussion](#design-implications-and-discussion)
 5. [Minimum Acceptance Criteria](#5-minimum-acceptance-criteria)
@@ -33,17 +33,13 @@ ChRIS observability tools will be used by healthcare system administrators and m
 - Will have access to a user friendly interface with optional access to raw system logs
 
 ### Standard users
-- Simple use-cases for non-expert users
+- Simple use-cases for non-expert users (e.g. medical researchers or personnel) to easily monitor the performance of their individual plugins
 - Be able to schedule their jobs more efficiently through an easy-to-use, interactive interface separate from the expert user interface
-- (Stretch goal) Implement an automated alert system that is able to be parsed automatically for errors and error rates to inform system administrators to better understand system problems as they are happening and fix those problems in real time
-- (Stretch goal) A user-friendly dashboard that gives a simple front-end display for Observability metrics to be used by non-expert users (i.e. researchers or medical personnel) in the ChRIS UI. Metrics for end users would be for monitoring and measuring the performance of their own plugins for better understanding of things like how much RAM or CPUs their task requires.
 
 
 ## 3. Scope and Features of the Project
 
-ChRIS is already a functional container scheduler used for performing data analytics tasks for medical professions. However, the system currently does not have automated observability procedures tied to the ChRIS platform which can be used to view internal statistics and performance. Our scope will be not to improve the ChRIS system but to utilize ChRIS using Openshift and to provide easy to use observability tools using a software stack.
-The scope consists of two parts: Implementation of ChRIS with scripts for boot with Openshift, and research and implementation of an easy to boot observability software stack
-
+ChRIS is already a functional container scheduler used for performing data analytics tasks for medical professions. However, the system currently does not have automated observability procedures tied to the ChRIS platform which can be used to view internal statistics and performance. Our scope will be not to improve the ChRIS system, but to utilize ChRIS using Openshift and to provide easy-to-use observability tools using a software stack. The scope consists of two parts: Implementation of ChRIS with scripts for boot with Openshift, and research and implementation of an easy to boot observability software stack with a user interface. 
 
 The primary objectives of the project include:
 - Deploying ChRIS on the New England Research Cloud (NERC) to make ChRIS function using Kubernetes and OpenShift
@@ -56,9 +52,10 @@ The primary objectives of the project include:
 
 This section highlights technical details regarding the implementation of our observability system, as well as discussing implications that could arise as a result of our research and design choices.
 ### Global Architecture Of the Project
-The foundation of our project will revolve around the deployment of ChRIS unto NERC, along with an observability stack which we will configure to ensure efficiency and robustness of deployment. Details of the architecture of the components in our proposed observability stack are highlighted in the subsection below.
-### Observability Stack Components
-Our observability stack will generally follow the LGTM observability stack paradigm, consisting of the following components
+The foundation of our project will revolve around the deployment of ChRIS in the New England Research Cloud (NERC), along with an observability stack which we will configure to ensure efficiency and robustness of deployment. Additionally, we aim to develop a robust configuration for ChRIS along with an efficient observability stack on OpenShift through the NERC, and we plan to deliver that through the Helm framework. Finally, we also seek to improve the observability capabilities of our deployed observability stack by using the data it collects to develop new modules or features, either in the observability stack or in the ChRIS application itself. Details of the architecture of the various components in our proposed system are highlighted in the subsections below.
+
+### Development of Observability Stack
+Our observability stack will adopt the LGTM observability stack paradigm for collecting and monitoring metrics including CPU and memory usage, resource allocation patterns, and temporal distribution of medical analysis programs for system management purposes. Metrics will be collected and visualized in a dashboard for easy access and monitoring by system admins. It will consist of the following components providing functionality for log collection, visualization, traces and metrics:
 
 - #### Grafana
   A multi-platform open-source analytics and interactive visualization web application. It provides visualization of data into charts, graphs, and alerts for the web when connected to supported data sources.
@@ -73,7 +70,12 @@ Although using this observability stack setup is our foremost design choice, we 
 
 ### Deployment on the New England Research Cloud (NERC)
 
+A big part of the project will also be testing and automating the deployment of ChRIS with the observability stack on the NERC. 
 
+### OpenShift
+OpenShift is the RedHat container scheduler powered by Kubernetes that the New England Research Cloud uses for developing and deploying applications. We will be using OpenShift for deploying ChRIS onto the NERC so that we can test that our observability stack is gathering, storing, and visualizing metrics correctly.
+### Helm
+Helm is a software packaging manager that makes it easier to deploy applications to OpenShift clusters. We will be creating a Helm project for automating deploying ChRIS and the appropriate parts of the observability stack onto OpenShift for ease of deployment to the NERC.
   
 ### Design Implications and Discussion
 
