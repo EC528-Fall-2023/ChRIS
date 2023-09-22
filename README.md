@@ -1,4 +1,4 @@
-# ChRIS
+# ![logo](./logo_chris.png) ChRIS
 ---
 ## Table of Contents
 
