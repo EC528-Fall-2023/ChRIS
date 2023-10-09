@@ -122,7 +122,7 @@ A big part of the project will also be testing and automating the deployment of 
 
 
 
-![alt_text](./figure_1.jpg "Figure 1: Diagram of What Observability Stack Will Look Like in the NERC")
+![alt_text](./architecture.jpg "Figure 1: Diagram of What Observability Stack Will Look Like in the NERC")
 
 
 **Figure 1: Diagram of What Observability Stack Will Look Like in the NERC**
