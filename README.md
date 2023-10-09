@@ -93,7 +93,7 @@ The primary scope of the project will consist of the following:
 
 ## 4. Solution Concept
 
-### Global Architectural Structure Of the Project
+### Global Architecture of the Project
 
 The foundation of our project will revolve around the deployment of ChRIS in the New England Research Cloud (NERC), along with an observability stack which we will configure to ensure efficiency and robustness of deployment. Additionally, we aim to develop a robust configuration for ChRIS along with an efficient observability stack on OpenShift through the NERC, and we plan to deliver that through the Helm framework. Finally, we also seek to improve the observability capabilities of our deployed observability stack by using the data it collects to develop new modules or features, either in the observability stack or in the ChRIS application itself. Details of the architecture of the various components in our proposed system are highlighted in the subsections below.
 
