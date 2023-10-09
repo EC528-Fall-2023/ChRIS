@@ -47,6 +47,10 @@ High-Level Goals for improving ChRIS include:
 * Configure observable instances of ChRIS with OpenShift and Helm
 * Deploy ChRIS on the New England Research Cloud (NERC) with the observability stack and be able to run ChRIS plug-ins and obtain meaningful observability data
 
+Below are definitions of some terms that will be frequently encountered in this README file:
+* Plugin:
+Container image used for running computational workflows
+
 ## 2. End Users Of The Project
 
 ChRIS observability tools will be used by healthcare system administrators and medical researchers/personnel to provide active statistics on the performance of ChRIS’s backend and individual tasks in the ChRIS container scheduling system. They will mainly be used by expert users for the sake of improving and maintaining the efficient functionality of the ChRIS system during its operation. However, it will also be used for the Medical employment sector in order to track the performance of their ChRIS plugins running medical data workflows.
