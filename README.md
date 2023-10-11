@@ -164,13 +164,13 @@ Stretch goals are:
 
 ## 6. Release Planning
 
-### Release #1 (due by Week 5):
+### Release #1 (due by Week 5, 10/11/2023):
 
 
 
 * Deploy backend for ChRIS on New England Research Cloud (NERC) and enable end-users to access ChRIS via NERC
 
-### Release #2 (due by Week 7):
+### Release #2 (due by Week 7, 10/25/2023):
 
 
 
