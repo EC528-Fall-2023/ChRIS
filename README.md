@@ -55,7 +55,7 @@ Container image used for running computational workflows
 
 ChRIS observability tools will be used by healthcare system administrators and medical researchers/personnel to provide active statistics on the performance of ChRIS’s backend and individual tasks in the ChRIS container scheduling system. They will mainly be used by expert users for the sake of improving and maintaining the efficient functionality of the ChRIS system during its operation. However, it will also be available for the Medical employment sector in order to track the performance of their ChRIS plugins running medical data workflows.
 
-##### System administrators:
+##### System administrators (Primary users):
 
 
 
@@ -63,7 +63,7 @@ ChRIS observability tools will be used by healthcare system administrators and m
 * Track metrics such as CPU utilization and storage for finding any system errors and maintaining the service in real-time
 * Will have access to a user-friendly interface (e.g. Grafana dashboard) with optional access to raw system logs
 
-##### Non system admin users (not primary users):
+##### Non system admin users (Secondary users):
 
 
 
