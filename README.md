@@ -112,6 +112,10 @@ Our observability stack will adopt the observability stack paradigm for collecti
 
 - ##### Thanos: The Thanos query command (also known as “Querier”) implements the Prometheus HTTP v1 API to query data in a Thanos cluster via PromQL. It gathers the data needed to evaluate the query from underlying StoreAPIs, evaluates the query, and returns the result to Grafana for visualization. Thanos will allow us to efficiently store and transmit data.
 
+- #### Tempo: Tempo is a high-volume tracing backend which efficiently implements distributed tracing on a large scale without the need for specialized clusters. Tempo also allows for efficient capture and storage of individual, exact traces.
+
+- #### OpenTelemetry: OpenTelemetry provides a single, open-source standard for instrumenting, generating, collecting and exporting telemetry data (logs, metrics, traces). OpenShift on NERC has pre-installed OpenTelemetry auto-instrumentation and collection operators, which can be connected to other tools in our deployed observability stack, such as Prometheus and Tempo, for further processing.
+
 - ##### Prometheus: Prometheus collects and stores its metrics as time series data, i.e. metrics information is stored with the timestamp at which it was recorded, alongside optional key-value pairs called labels which can be sent to Grafana for visualization.
 
 Although using this observability stack setup is our foremost design choice, we will be researching using OpenSource as our observability stack and plan to compare the efficiency of its performance to that of the LGTM stack implementation and choose the option with the best performance.
@@ -124,7 +128,7 @@ A big part of the project will also be testing and automating the deployment of 
 
 - ##### Helm: Helm is a software packaging manager that makes it easier to deploy applications to OpenShift clusters. We will be creating a Helm project for automating deploying ChRIS and the observability stack onto OpenShift for ease of deployment to the NERC.
 
-
+OpenShift on NERC possesses two tools and operators that we will be directly using in our observability stack; an in-built Prometheus tool and the OpenTelemetry operator. The OpenShift Prometheus tool will allow us to scrape simpler metrics such as CPU and memory usage which can then be exported to our deployed Grafana tool for display to our users. However, it does not collect more detailed metrics or HTTP requests, hence we plan to deploy our own instance of Prometheus which will allow us to do this. We will also use OpenTelemetry auto-instrumentation and collector tools to allow us to collect and aggregate all telemetry data (i.e. logs, metrics, traces), which can then be exported to the other tools on our observability stack.
 
 
 ![alt_text](./new_diag.png "Figure 1: Diagram of What Observability Stack Will Look Like in the NERC")
