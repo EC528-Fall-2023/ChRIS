@@ -176,33 +176,38 @@ Stretch goals are:
 
 ## 6. Release Planning
 
-### Release #1 (due by Week 5, 10/11/2023):
+### Release #1 (Sep 27 - Oct 11):
 
-* Deployed backend and frontend for ChRIS on New England Research Cloud (NERC)
-* Researched each required part of observability stack for our project as well as topics in Openshift and ChRIS code
+* Deploy backend and frontend for ChRIS on New England Research Cloud (NERC)
+* Research each required part of observability stack for our project as well as topics in Openshift and ChRIS code
 
-### Release #2 (due by Week 7, 10/25/2023):
+### Release #2 (Oct 11 - Oct 25):
 
-
+* Deploy remaining parts of ChRIS (pfcon and pman) and test that plugins run successfully
+* Start deploying Observability stack
+   * Deploy Grafana and Prometheus on NERC, allowing collection of metrics on Openshift containers
+   * Research into tracing tools and begin implementation
+   * Deploy Open Telemetry core and collector (auto-instrumentation is not yet implemented)
 * Split team to focus on metrics and logs, and traces separately
-* Deployed Grafana and Prometheus on NERC, allowing collection of metrics on Openshift containers
-* Acquired information on tracing tools and begun implementation
-* Deployed Open Telemetry core and collector (auto-instrumentation is not yet implemented)
 
-### Release #3 (due by Week 9):
-
+### Release #3 (Oct 26 - Nov 8):
 
 * Deploy the rest of the Observability stack including Loki and Tempo
-* Connect observability stack to function together
-* Test how to gather meaningful data and set up a system to gather this data and display it on Grafana
+* Connect observability stack to gather metrics and logs
 
-### Release #4 (due by Week 10):
+* Define what it looks like when a plugin fails (in metrics and logs) and set up alerting system for failing plugins
+* Define what metrics are meaningful to observe and set up visualizations on Grafana for them
 
+* Define which parts of ChRIS to implement traces to
+* Start deploying traces (looking into auto-instrumentation vs. manually implementing tracing in ChRIS source code)
+
+### Release #4 (Nov 8 - Nov 22):
 
 * Work on finalizing version and submitting an official pull request to the ChRIS-helm project ([https://github.com/FNNDSC/charts](https://github.com/FNNDSC/charts)), achieve deliverable Minimum Viable Product
 
-### Release #5 (due by Week 12):
+### Release #5 (Nov 22 - Dec 8):
 
+* Finish components of MVP that are not finished
+   * Alternatively, work on reach goals if finished with MVP
+* Write documentation on what we've done
 
-
-* Work on stretch goals, including automated alert systems, friendly front end on top of observability stack, and/or automated function testing for existing dashboards
