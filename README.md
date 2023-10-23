@@ -50,6 +50,8 @@ High-Level Goals for improving ChRIS include:
 Below are definitions of some terms that will be frequently encountered in this README file:
 * Plugin:
 Container image used for running computational workflows
+* Instrumentation:
+Setting up a system such that its components emit meaningful traces, metrics and logs
 
 ## 2. End Users Of The Project
 
