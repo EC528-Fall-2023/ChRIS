@@ -131,7 +131,7 @@ A big part of the project will also be testing and automating the deployment of 
 OpenShift on NERC possesses two tools and operators that we will be directly using in our observability stack; an in-built Prometheus tool and the OpenTelemetry operator. The OpenShift Prometheus tool will allow us to scrape simpler metrics such as CPU and memory usage which can then be exported to our deployed Grafana tool for display to our users. However, it does not collect more detailed metrics or HTTP requests, hence we plan to deploy our own instance of Prometheus which will allow us to do this. We will also use OpenTelemetry auto-instrumentation and collector tools to allow us to collect and aggregate all telemetry data (i.e. logs, metrics, traces), which can then be exported to the other tools on our observability stack.
 
 
-![alt_text](./new_diag.png "Figure 1: Diagram of What Observability Stack Will Look Like in the NERC")
+![alt_text](./updateddiag.JPG "Figure 1: Diagram of What Observability Stack Will Look Like in the NERC")
 
 
 **Figure 1: Diagram of What Observability Stack Will Look Like in the NERC**
