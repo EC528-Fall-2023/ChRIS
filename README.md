@@ -173,24 +173,25 @@ Stretch goals are:
 
 ### Release #1 (due by Week 5, 10/11/2023):
 
-
-
-* Deploy backend for ChRIS on New England Research Cloud (NERC) and enable end-users to access ChRIS via NERC
+* Deployed backend and frontend for ChRIS on New England Research Cloud (NERC)
+* Researched each required part of observability stack for our project as well as topics in Openshift and ChRIS code
 
 ### Release #2 (due by Week 7, 10/25/2023):
 
 
+* Split team to focus on metrics and logs, and traces separately
+* Deployed Grafana and Prometheus on NERC, allowing collection of metrics on Openshift containers
+* Acquired information on tracing tools and begun implementation
+* Deployed Open Telemetry core and collector (auto-instrumentation is not yet implemented)
 
-* Deploy observability on NERC and connect to ChRIS and enable system admins to collect logs generated from running containers
-
-### Release #3 (due by Week 8):
+### Release #3 (due by Week 9):
 
 
-
-* Implement a Dashboard in Observability that is useful to system admins and contains information about running containers
+* Deploy the rest of the Observability stack including Loki and Tempo
+* Connect observability stack to function together
+* Test how to gather meaningful data and set up a system to gather this data and display it on Grafana
 
 ### Release #4 (due by Week 10):
-
 
 
 * Work on finalizing version and submitting an official pull request to the ChRIS-helm project ([https://github.com/FNNDSC/charts](https://github.com/FNNDSC/charts)), achieve deliverable Minimum Viable Product
