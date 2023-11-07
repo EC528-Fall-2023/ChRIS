@@ -44,7 +44,7 @@
 
 ## 1. Vision and Goals Of The Project
 
-The ultimate vision of this project is to transform ChRIS, a container scheduler for complex medical analysis tasks, into a highly observable and data-driven medical analysis platform, while maintaining simplicity for end users. We plan to implement an observability stack for monitoring metrics about the ChRIS system such as CPU utilization for system admins maintaining the system in real-time, and metrics about the performance of individual ChRIS plugins for end users. We will also test deploying ChRIS to the New England Research Cloud (NERC) with the observability stack.
+The ultimate vision of this project is to transform ChRIS, a container scheduler for complex medical analysis tasks, into a highly observable and data-driven medical analysis platform, while maintaining simplicity for end users. We plan to implement an observability stack for monitoring metrics about the ChRIS system such as CPU utilization for system admins maintaining the system in real-time, as well as metrics about the performance of individual ChRIS plugins. We are also planning on implementing visualizations for traces of the ChRIS system to track the source of a current issue ChRIS has with overhead delays. We will also test deploying ChRIS to the New England Research Cloud (NERC) with the observability stack.
 
 High-Level Goals for improving ChRIS include:
 
@@ -130,6 +130,13 @@ Our observability stack will adopt the observability stack paradigm for collecti
 
 Although using this observability stack setup is our foremost design choice, we will be researching using OpenSource as our observability stack and plan to compare the efficiency of its performance to that of the LGTM stack implementation and choose the option with the best performance.
 
+### Generating Visualizations of Observability Data (Metrics, Logs, Traces):
+
+Our Observability stack features Grafana, the data visualization platform that is able to connect to the previously mentioned components such as Loki and Prometheus. As a part of our project, we will be ingesting the metrics, logs, and traces and creating meaningful visualizations and alerting that is able to perform the following:
+* Visualize system performance metrics for system admins, and alert upon system exceeding a certain threshold
+* Visualize / monitor for recent plugin failures, and alert users upon plugin failure
+* Visualize plugin performance metrics for system admins, and alert if plugin is failing or stuck
+
 ### Deployment to the New England Research Cloud (NERC)
 
 A big part of the project will also be testing and automating the deployment of ChRIS with the observability stack on the NERC. The model that we will be following is shown in **Figure 1**.
@@ -164,18 +171,16 @@ OpenShift on NERC possesses two tools and operators that we will be directly usi
 
 The minimum viable product is:
 
-
-
 * A version of ChRIS which runs on NERC integrated with Openshift
 * The version of ChRIS should also have attached observability tools able to run using the new Openshift applications
+* Implement an automated alert systems that notifies system admins of anomalies and breaks in the system, and for plugin failures
+* Gather traces for debugging ChRIS's existing problem with overhead delays
 * Helm project containing configuration for deploying ChRIS on Kubernetes with observability
-* By the end of the project, we will have a pull request for [https://github.com/FNNDSC/charts](https://github.com/FNNDSC/charts) with our changes
 
 Stretch goals are:
 
 
 
-* Implement an automated alert system that notifies system admins of anomalies and breaks in the system
 * Explore other observability options and possible optimizations, such as OpenObserve, ELK observability stack, etc.
 * Create a user-friendly frontend on top of the observability stack
 * Create an automated testing suite for analyzing the performance of the observability stack itself
@@ -209,11 +214,19 @@ Stretch goals are:
 
 ### Release #4 (Nov 8 - Nov 22):
 
-* Work on finalizing version and submitting an official pull request to the ChRIS-helm project ([https://github.com/FNNDSC/charts](https://github.com/FNNDSC/charts)), achieve deliverable Minimum Viable Product
+**Finishing With MVP**
+* Deploy the rest of Loki and connect with Grafana
+* Start visualizing the traces provided by Tempo and OpenTelemetry
+
+* Finalize panels and alerts for monitoring system performance
+* Finalize panels and alerts for monitoring for plugin failures
+
+**Reach Goals**
+* Start deploying custom traces in the ChRIS source code (reach goal)
 
 ### Release #5 (Nov 22 - Dec 8):
 
 * Finish components of MVP that are not finished
    * Alternatively, work on reach goals if finished with MVP
-* Write documentation on what we've done
+* Write documentation on what we've done, including what panels are being used, what they're monitoring, and their settings 
 
