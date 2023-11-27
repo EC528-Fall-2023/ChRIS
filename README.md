@@ -173,7 +173,7 @@ The minimum viable product is:
 
 * A version of ChRIS which runs on NERC integrated with Openshift
 * The version of ChRIS should also have attached observability tools able to run using the new Openshift applications
-* Implement an automated alert systems that notifies system admins of anomalies and breaks in the system, and for plugin failures
+* Implement an automated alert systems that notifies system admins of anomalies and breaks in the system (but not for every plugin failure)
 * Gather traces for debugging ChRIS's existing problem with overhead delays
 * Helm project containing configuration for deploying ChRIS on Kubernetes with observability
 
