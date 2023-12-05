@@ -37,6 +37,13 @@ fi
 echo "done"
 
 echo "Installing Grafana"
+echo "Please add an email for receiving Grafana notifications"
+read email
+echo "You entered $email"
+echo "Please add email password for the prior email"
+read pw
+echo "You entered $pw"
+python -c 'import yaml;f=open("values.yaml");y=yaml.safe_load(f);y["grafana.ini"]["smtp"]["user"] = $email;y["grafana.ini"]["smtp"]["password"] = $pw;print(yaml.dump(y, default_flow_style=False, sort_keys=False))'
 helm install grafana$app_name grafana/grafana -f grafana.yaml
 echo "done"
 
@@ -69,5 +76,6 @@ echo "You entered: $redisPort"
 
 python -c 'import yaml;f=open("values.yaml");y=yaml.safe_load(f);y["logParser"]["namespace"] = $namespace;y["logParser"]["lokiHost"] = $lokiHost;y["logParser"]["lokiPort"] = $lokiPort;y["logParser"]["redisHost"] = $redisHost;y["logParser"]["redisPort"] = $redisPort; print(yaml.dump(y, default_flow_style=False, sort_keys=False))'
 helm install --values values.yaml loki-parser .
+cd $SCRIPT_DIR
 echo "done"
 
