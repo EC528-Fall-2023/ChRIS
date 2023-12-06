@@ -123,13 +123,6 @@ Although using this observability stack setup is our foremost design choice, we 
 
 For ELK, one of its most prominent features is efficient log parsing by content. Although this was something that may be interesting to implement, we ultimately chose to go with the LGTM Observability stack because of the better flexibility it offers, as well as because of the ELK stack's focus on log analytics.
 
-### Generating Visualizations of Observability Data (Metrics, Logs, Traces):
-
-Our Observability stack features Grafana, the data visualization platform that is able to connect to the previously mentioned components such as Loki and Prometheus. As a part of our project, we ingest the metrics, logs, and traces and create meaningful visualizations and alerting that is able to perform the following:
-* Visualize system performance metrics for system admins, and alert upon system exceeding a certain threshold
-* Visualize / monitor for recent plugin failures, and alert users upon plugin failure
-* Visualize plugin performance metrics for system admins, and alert if plugin is failing or stuck
-
 ### Deployment to the New England Research Cloud (NERC)
 
 A big part of the project will also be testing and automating the deployment of ChRIS with the observability stack on the NERC. The model that we will be following is shown in **Figure 1**.
@@ -147,11 +140,6 @@ OpenShift on NERC possesses two tools and operators that we use directly in our 
 **Figure 1: Diagram of What Observability Stack Will Look Like in the NERC**
 
 <img width="822" alt="Screen Shot 2023-10-23 at 3 08 41 PM" src="https://github.com/EC528-Fall-2023/ChRIS/assets/98369076/621594db-4ca9-44f7-a5a5-fcfd6fadd3b7">
-
-**Figure 2: Visualizing Meaningful Data Collected from OpenShift's Built-in Observability**
-
-### Design Implications and Discussion:
-
 
 
 * Generate more data regarding the interactions between ChRIS and its plug-ins, and the Kubernetes environment (i.e. how the apps consume resources on this platform, possible bugs/optimizations, etc.)
@@ -223,3 +211,29 @@ Stretch goals are:
 * Created alert for plugins that generate an error code (other than just CODE01)
 * Wrote documentation on what we've done, including what panels are being used, what they're monitoring, and their settings 
 
+## 7. Final Product
+
+### Deploying ChRIS and the LGTM Observability Stack to the New England Research Cloud:
+(overview of the difficulties we encountered with this)
+
+#### Loki
+
+#### Tempo (and OpenTelemetry)
+
+#### Prometheus
+
+### Grafana Dashboard:
+
+Our Observability stack features Grafana, the data visualization platform that is able to connect to the previously mentioned components such as Loki and Prometheus. As a part of our project, we ingest the metrics, logs, and traces and create meaningful visualizations and alerting that is able to perform the following:
+* Visualize ChRIS-specific plugin metrics and data for tracking ChRIS resource use and trends
+* Visualize system performance metrics for system admins
+* Visualize / monitor for recent plugin failures, and alert users upon plugins returning error codes
+* Visualize recent ChRIS, plugin, and error logs
+
+#### Row 1
+
+#### Row 2
+
+#### Row 3
+
+### Automated Deployment (in progress)
