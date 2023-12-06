@@ -155,14 +155,15 @@ The minimum viable product is:
 * A version of ChRIS which runs on NERC integrated with Openshift
 * The version of ChRIS should also have attached observability tools able to run using the new Openshift applications
 * Implement an automated alert systems that notifies system admins of anomalies and breaks in the system (but not for every plugin failure)
-* Gather traces for debugging ChRIS's existing problem with overhead delays
-* Helm project containing configuration for deploying ChRIS on Openshift with observability
+* Gather and display telemetry data (logs, metrics, traces)
+* Bash scripts containing configuration for deploying ChRIS on Openshift and observability stack
 
 Stretch goals are:
 
 * Explore other observability options and possible optimizations, such as OpenObserve, ELK observability stack, etc.
 * Create a user-friendly frontend on top of the observability stack
 * Create an automated testing suite for analyzing the performance of the observability stack itself
+* Gather traces for debugging ChRIS's existing problem with overhead delays
 
 ## 6. Release Planning
 
