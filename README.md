@@ -122,8 +122,6 @@ Our observability stack will adopt the observability stack paradigm for collecti
 
 - ##### Grafana: Grafana is a multi-platform open-source analytics and interactive visualization web application. It provides easy visualization of data into charts, graphs, and alerts for the web when connected to supported data sources.
 
-- ##### Thanos: The Thanos query command (also known as “Querier”) implements the Prometheus HTTP v1 API to query data in a Thanos cluster via PromQL. It gathers the data needed to evaluate the query from underlying StoreAPIs, evaluates the query, and returns the result to Grafana for visualization. Thanos will allow us to efficiently store and transmit data.
-
 - #### Tempo: Tempo is a high-volume tracing backend which efficiently implements distributed tracing on a large scale without the need for specialized clusters. Tempo also allows for efficient capture and storage of individual, exact traces.
 
 - #### OpenTelemetry: OpenTelemetry provides a single, open-source standard for instrumenting, generating, collecting and exporting telemetry data (logs, metrics, traces). OpenShift on NERC has pre-installed OpenTelemetry auto-instrumentation and collection operators, which can be connected to other tools in our deployed observability stack, such as Prometheus and Tempo, for further processing.
