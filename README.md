@@ -248,36 +248,39 @@ ChRIS-specific plugin metrics for observing plugin resource use, trends in plugi
 **Panel 1: Resource Use by Plugin Type**
 Display the amount of CPU use (in CPU use seconds), memory use (in GB), and runtime (in s) being used by a specified plugin type. The plugin type(s) whose resources are being displayed is set by the `$ChRISPluginImage` Grafana Dashboard Variable, which is configured for the dashboard as all plugin values queried from the connected ChRIS instance's PostgreSQL. This variable is displayed as a dropdown menu at the top as shown in the image below, where you are able to select single, multiple, or all plugin types. This is useful to visualize because it allows system admins to view the amount of resources being consumed by specific types of plugins as a time series graph.
 
-[Final Presentation (2) (dragged).pdf](https://github.com/EC528-Fall-2023/ChRIS/files/13592080/Final.Presentation.2.dragged.pdf)
+[Final Presentation (1).pdf](https://github.com/EC528-Fall-2023/ChRIS/files/13592335/Final.Presentation.1.pdf)
 
 **Panel 2: Number of plugins being run by Plugin Type**
 Display the number of plugins being run. The left panel displays the number of plugins being run using the `$ChrisPluginImage` dashboard variable so that system admins will be able to view the resources being used by the selected plugin type(s) next to the number of plugins of those type(s) that are ran. The right panel displays the overall number of plugins being run with a separate field for each plugin type.
 
-[Final Presentation (2) (dragged) 2.pdf](https://github.com/EC528-Fall-2023/ChRIS/files/13592106/Final.Presentation.2.dragged.2.pdf)
+[Final Presentation (2) (dragged) 2.pdf](https://github.com/EC528-Fall-2023/ChRIS/files/13592333/Final.Presentation.2.dragged.2.pdf)
 
 **Panel 3: Recent Plugin Errors Table**
 Display the recent error codes and related plugin information for plugins that have returned error codes. Error codes are related to issues like failing to schedule the plugin on pfcon, so these plugin failures are of interest to system admins debugging failing plugins
 
-[Final Presentation (2) (dragged) 3.pdf](https://github.com/EC528-Fall-2023/ChRIS/files/13592138/Final.Presentation.2.dragged.3.pdf)
+[Final Presentation (2) (dragged) 3.pdf](https://github.com/EC528-Fall-2023/ChRIS/files/13592332/Final.Presentation.2.dragged.3.pdf)
 
 **Panel 4: Number of Plugins Ran by User**
 Display the number of plugins being ran organized by username. This could be useful for system administrators seeing which users are consuming ChRIS resources. Although it was a hope of ours to be able to expose directly the resource consumption by username, because we don't have our own Prometheus instance where we can add such labels we are unable to gather this information. This is implemented currently as PostgreSQL data represented as a time series graph based on the start and end times of when plugins are logged as running.
 
-[Final Presentation (2) (dragged) 4.pdf](https://github.com/EC528-Fall-2023/ChRIS/files/13592165/Final.Presentation.2.dragged.4.pdf)
+[Final Presentation (2) (dragged) 4.pdf](https://github.com/EC528-Fall-2023/ChRIS/files/13592330/Final.Presentation.2.dragged.4.pdf)
 
 **Panel 5 & 6: Plugin Use Frequency & File Use Frequency**
 Displays the global number of times that each plugin type has been run as a table, and displays the global count of each filename used by user. Panel 5 is useful for getting information on how ChRIS is being used such as which plugins are most often used for analysis, and panel 6 has been mentioned by our mentors as possibly being useful for users who want to get information on which files are used most frequently.
 
-[Final Presentation (2) (dragged) 5.pdf](https://github.com/EC528-Fall-2023/ChRIS/files/13592259/Final.Presentation.2.dragged.5.pdf)
-
+[Final Presentation (2) (dragged) 5.pdf](https://github.com/EC528-Fall-2023/ChRIS/files/13592329/Final.Presentation.2.dragged.5.pdf)
 
 **Panel 7: Overall Plugin Resource Use**
 Displays information on the overall amount of resources that each plugin image consumes. This includes the average and maximum CPU use, memory use, and runtime within the time period set by Grafana. This is useful for getting information on the amount of resources each plugin typically consumes. A limitation of this panel, however, is that it is unable to gather meaningful data for plugins with short runtimes (<15s), however our mentors have mentioned that these plugins may be less interesting for gathering this kind of information.
 
-[Final Presentation (2) (dragged) 6.pdf](https://github.com/EC528-Fall-2023/ChRIS/files/13592261/Final.Presentation.2.dragged.6.pdf)
+[Final Presentation (2) (dragged) 6.pdf](https://github.com/EC528-Fall-2023/ChRIS/files/13592315/Final.Presentation.2.dragged.6.pdf)
+
 
 **Panel 8: Number of Plugins that have Exited with Success vs. Error Grouped by Week**
 Display the sum of the number of plugins that have returned success and error each week. This is a panel that was mentioned in a ChRIS GitHub issue as something that may be interesting to expose for gathering information of how many ChRIS plugins have been failing and succeeding.
+
+[Final Presentation (2) (dragged) 7.pdf](https://github.com/EC528-Fall-2023/ChRIS/files/13592322/Final.Presentation.2.dragged.7.pdf)
+
 
 ### OpenTelemetry (Traces generation & collection):
 Our Observability stack implemented an auto-instrumentation subsystem & traces collection subsystem via OpenTelemetry. As part of the project, it enables the ChRIS system to generate traces and collect them for better observability. This subsystem can perform the following:
