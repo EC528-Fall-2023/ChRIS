@@ -321,7 +321,7 @@ This script launches the entire observability stack onto an openshift environmen
 * The files in this github in the same directory as the script: otel_py_instrumentation.yaml, grafana.yaml, tempo.yaml, otel_py_collector.yaml
 The way you run the script is the following:
 * Call the observability.bash script two command line arguments like so:
-      $0 [-a app_name (optional)] [-n namespace (mandatory)]
+      <$0 [-a app_name (optional)] [-n namespace (mandatory)]>
 * Namespace is the Openshift project name. If no appname is specified, just a default name is used.
 * After running the script, it will ask for an email and password for that email to set up grafana notifications
 * If successful, it should run to completition and output no errors and a message of done after each part of the observability stack
@@ -330,10 +330,18 @@ The way you run the script is the following:
 To uninstall, just run uninstall.bash -a app_name
 
 # chris_deploy.bash:
-This script launches ChRIS on an Openshift environment with an option to automatically connect to autoinstrumentation of open telemetry is an observability stack is already present
-* All that is needed for this is a Helm installation
-* Access to oc command for Openshift CLI
-* List of files: otel_py_instrumentation.yaml, otel_py_collector.yaml and chris.yaml
+This script launches ChRIS on an Openshift environment with an option to automatically configure instrumentation for open telemetry. The requirements are as follows:
+* Openshift command line command access which can be done through the oc login command
+* Installation of helm
+* The files in this github in the same directory as the script: chris_base.yaml, chris_annotated.yaml
+The way you run the script is the following:
+* Call the chris_deploy.bash script:
+      <$ ./chris_deploy.bash>
+You will be asked to enter a <release_name> and to choose whether or not to deploy an annotated instance of ChRIS
+If successful and <release_name> is provided, a helm deployment called <chris-"release_name"> will be deployed on your cluster
+If no release name is provided, the deployment will be called <chris>
+
+To uninstall, run uninstall_chris.bash and provide the appropriate release name for your ChRIS deployment.
 
 
 
