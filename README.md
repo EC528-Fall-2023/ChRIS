@@ -230,7 +230,11 @@ Our Observability stack features Grafana, the data visualization platform that i
 * Visualize / monitor for recent plugin failures, and alert users upon plugins returning error codes
 * Visualize recent ChRIS, plugin, and error logs
 
-#### Row 1
+### OpenTelemetry Traces generation & collection:
+Our Observability stack implemented an auto-instrumentation system & traces collection system via OpenTelemetry. As part of the project, it enable the ChRIS system to generate traces and collect them for better observability. This subsystem is able to perform following:
+* Auto-instrument selected pod with a specific annotation
+* Instrumented pod generates traces per request with related information
+* Collector that collects & processes all the traces from instrumented pods
 
 #### Row 2
 
