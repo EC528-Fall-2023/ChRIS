@@ -139,9 +139,6 @@ OpenShift on NERC possesses two tools and operators that we use directly in our 
 
 **Figure 1: Diagram of What Observability Stack Will Look Like in the NERC**
 
-<img width="822" alt="Screen Shot 2023-10-23 at 3 08 41 PM" src="https://github.com/EC528-Fall-2023/ChRIS/assets/98369076/621594db-4ca9-44f7-a5a5-fcfd6fadd3b7">
-
-
 * Generate more data regarding the interactions between ChRIS and its plug-ins, and the Kubernetes environment (i.e. how the apps consume resources on this platform, possible bugs/optimizations, etc.)
 * Promoting integration between high-level computing and the fields of healthcare and medical research
 * Increasing accessibility of complex applications to end users on various cloud platforms (i.e. with ChRIS deployed on NERC, accessing complex and efficient medical tools becomes more ubiquitous and accessible to potential end users such as small clinics or medical researchers)
