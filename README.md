@@ -255,3 +255,28 @@ Our Observability stack implemented the traces storage & query subsystem via Tem
 #### Row 3
 
 ### Automated Deployment (in progress)
+We have implemented two separate deployment scripts. Over the course of our project we realized the difficulty of deploying observability without access to cluster admin account on Openshift which led to use having to manually modify helm charts and application deployment. As such, we have a script which deploys a general observability stack which sets up all portions with Grafana, Loki, Open Telemetry, Tempo. There are some minor bugs with Prometheus that should be sorted out soon so we are currently not able to deploy Prometheus fully.
+The current auto observability deployment consists of two scripts:
+# observability.bash: 
+This script launches the entire observability stack onto an openshift environment and all that it requires are the following:
+* Openshift command line command access which can be done through the oc login command
+* Installation of helm
+* The files in this github in the same directory as the script: otel_py_instrumentation.yaml, grafana.yaml, tempo.yaml, otel_py_collector.yaml
+The way you run the script is the following:
+* Call the observability.bash script two command line arguments like so:
+      $0 [-a app_name (optional)] [-n namespace (mandatory)]
+* Namespace is the Openshift project name. If no appname is specified, just a default name is used.
+* After running the script, it will ask for an email and password for that email to set up grafana notifications
+* If successful, it should run to completition and output no errors and a message of done after each part of the observability stack
+* The functions for connecting each routes for each observability are not fully implemented, but routes are output from the installation script, and all that is necessary is to paste them into datasources in grafana in order to connect each part of the observability stack. In the future, automated interaction with grafana will be implemented, allowing users to skip this step and automatically connect all observability with grafana.
+
+To uninstall, just run uninstall.bash -a app_name
+
+# chris_deploy.bash:
+This script launches ChRIS on an Openshift environment with an option to automatically connect to autoinstrumentation of open telemetry is an observability stack is already present
+* All that is needed for this is a Helm installation
+* Access to oc command for Openshift CLI
+* List of files: 
+
+
+
