@@ -51,34 +51,26 @@ The ultimate vision of this project is to transform ChRIS, a container scheduler
 High-Level Goals for improving ChRIS include:
 
 * Implement robust observability stack for ChRIS to collect critical performance data of the system and individual plugins
-* Provide a simple, understandable interface for visualizing and monitoring the observability data (e.g. Grafana dashboard) both for expert users such as system administrators and for non-expert medical researchers
+* Provide a simple, understandable interface for visualizing and monitoring the observability data (e.g. Grafana dashboard) for system administrators
 * Configure observable instances of ChRIS with OpenShift and Helm
 * Deploy ChRIS on the New England Research Cloud (NERC) with the observability stack and be able to run ChRIS plug-ins and obtain meaningful observability data
 
 Below are definitions of some terms that will be frequently encountered in this README file:
 * Plugin:
-Container image used for running computational workflows
+Container image used for running computational workflows in ChRIS
 * Instrumentation:
 Setting up a system such that its components emit meaningful traces, metrics and logs
 
 ## 2. End Users Of The Project
 
-ChRIS observability tools will be used by healthcare system administrators to provide active statistics on the performance of ChRIS’s backend and individual tasks in the ChRIS container scheduling system. They will mainly be used by expert users for the sake of improving and maintaining the efficient functionality of the ChRIS system during its operation. However, it my also be useful for the Medical employment sector in order to track the performance of their ChRIS plugins running medical data workflows, however interface for non-expert users is not yet implemented.
+ChRIS observability tools will be used by healthcare system administrators to provide active statistics on the performance of ChRIS’s backend and individual tasks in the ChRIS container scheduling system. They will mainly be used by expert users for the sake of improving and maintaining the efficient functionality of the ChRIS system during its operation, as well as allowing system administrators to track trends in how ChRIS is performing and being used. However, it my also be useful for the Medical employment sector in order to track the performance of their ChRIS plugins running medical data workflows, however interface for non-expert users is not yet implemented.
 
 ##### System administrators (Primary users):
 
-
-
 * Monitor performance metrics and maintain the system
-* Track metrics such as CPU utilization and storage for finding any system errors and maintaining the service in real-time
-* Will have access to a user-friendly interface (e.g. Grafana dashboard) with optional access to raw system logs
-
-##### Non system admin users (Secondary users):
-
-
-* Currently, shares interface with system adminstrators
-* Simple use-cases for non-expert users (e.g. medical researchers or personnel) to easily monitor the performance of their individual plugins
-* Assumes that users have experience using the ChRIS UI to be able to effectively use/understand the monitoring data
+* Track metrics such as CPU utilization and information like recent errors for maintaining the service in real-time
+* Track trends in plugin use such as resource use by plugin image type and plugin use by users over time
+* Will have access to a user-friendly interface (e.g. Grafana dashboard)
 
 ## 3. Scope and Features Of The Project
 
@@ -94,8 +86,9 @@ The primary scope of the project will consist of the following:
     * Deploy backend for ChRIS container logging
     * Collect essential information about running container
 * Implement observability architecture for a system administrator
-    * Automatically collect and query generated log from containers
+    * Automatically collect and query generated logs from containers
     * Visualize collected data on the administrator’s interface
+    * Create useful visualizations for gathering plugin metrics, system performance metrics, and system logs
 * Learn how to utilize Openshift on the New England Research Cloud (NERC) and use that implementation with ChRIS
     * Deploy ChRIS on the NERC using OpenShift
     * Create a Helm project for deploying ChRIS and the observability stack on OpenShift
@@ -125,7 +118,10 @@ Our observability stack adopts the observability stack paradigm for collecting a
 
 - #### Prometheus: Prometheus collects and stores its metrics as time series data, i.e. metrics information is stored with the timestamp at which it was recorded, alongside optional key-value pairs called labels which can be sent to Grafana for visualization.
 
-Although using this observability stack setup is our foremost design choice, we have researched using OpenSource as our observability stack and chose not to use it for the sake of implementing a more general platform used now in industry so that our automated deployment may be useful for other teams and projects.
+#### LGTM Stack Alternatives
+Although using this observability stack setup is our foremost design choice, we have researched into OpenObservability and the ELK (Elasticsearch, Logstash, Kibana) observability stacks as possible alternatives. OpenObservability is advertised as a simpler, cheaper alternative to traditional Observability stacks. Although it's marketed as being easier to deploy and cheaper for storage, we ultimately decided not to use it because it is relatively new and so it would lack the documentation and support that more widely-used Observability stacks like LGTM have.
+
+For ELK, one of its most prominent features is efficient log parsing by content. Although this was something that may be interesting to implement, we ultimately chose to go with the LGTM Observability stack because of the better flexibility it offers, as well as because of the ELK stack's focus on log analytics.
 
 ### Generating Visualizations of Observability Data (Metrics, Logs, Traces):
 
@@ -176,8 +172,6 @@ The minimum viable product is:
 
 Stretch goals are:
 
-
-
 * Explore other observability options and possible optimizations, such as OpenObserve, ELK observability stack, etc.
 * Create a user-friendly frontend on top of the observability stack
 * Create an automated testing suite for analyzing the performance of the observability stack itself
@@ -217,6 +211,7 @@ Stretch goals are:
 
 * Finalized panels and alerts for monitoring system performance
 * Finalized panels and alerts for monitoring for plugin failures
+* Got experience as a ChRIS user to be able to easily generate plugin data
 
 **Reach Goals**
 * Started deploying custom traces in the ChRIS source code (reach goal)
@@ -224,6 +219,7 @@ Stretch goals are:
 ### Release #5 (Nov 22 - Dec 8):
 
 * Implemented an automated deployment of observability stack and chris without connections (Connections TBD)
-* Generated data by running different plugins to show in grafana panels
-* Write documentation on what we've done, including what panels are being used, what they're monitoring, and their settings 
+* Created panels for analyzing trends in ChRIS plugin use
+* Created alert for plugins that generate an error code (other than just CODE01)
+* Wrote documentation on what we've done, including what panels are being used, what they're monitoring, and their settings 
 
