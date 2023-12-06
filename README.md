@@ -277,7 +277,7 @@ To uninstall, just run uninstall.bash -a app_name
 This script launches ChRIS on an Openshift environment with an option to automatically connect to autoinstrumentation of open telemetry is an observability stack is already present
 * All that is needed for this is a Helm installation
 * Access to oc command for Openshift CLI
-* List of files: 
+* List of files: otel_py_instrumentation.yaml, otel_py_collector.yaml and chris.yaml
 
 
 
