@@ -223,7 +223,7 @@ Normally, Loki deployments contain a component knows as a Promtail Agent, which 
 
 As a substitution, we have developed a log parsing Python script that leverages Kubernetes API, Loki API and a Redis database. The Kubernetes API is capable of accessing log JSON files from container runtimes by communicating with the kubelet on the node where the pod is running. Typically, for containers generated from Docker images default log configuration uses a driver which caps log files at 10MB and keeps up to three files before truncating the oldest logs. By default, each request for logs returns as many of past logs from those files as possible, therefore, it is important to reduce that number by only querying logs that were generated since last request. Our solution accomplishes that by caching the timestamp of each request on a Redis server in another pod, which enables to computing the elapsed time on the next iteration of the script. That time difference is then used as a parameter to the Kubernetes API which tells it to only quey most recent logs, and those logs are then passed to Loki via the Loki API push request.
 
-![alt_text](./parser.png "Figure 2: Loki Parser Diagram")
+![alt_text](./lokiparser.png "Figure 2: Loki Parser Diagram")
 
 #### Tempo (and OpenTelemetry)
 
