@@ -225,9 +225,7 @@ As a substitution, we have developed a log parsing Python script that leverages 
 
 ![alt_text](./lokiparser.png "Figure 2: Loki Parser Diagram")
 
-#### Tempo (and OpenTelemetry)
 
-#### Prometheus
 
 ### Grafana Dashboard:
 
@@ -250,9 +248,12 @@ Our Observability stack implemented the traces storage & query subsystem via Tem
 * Provide outgoing route to access stored data
 * Provide API to query traces with specific criteria
 
-#### Row 2
-
-#### Row 3
+### Prometheus (Metrics storage & query)
+Our Observability stack implemented the metrics storage & query subsystem via Prometheus. It enables the Observability stack to store metrics and provide query API and Route for Grafana. This subsystem can perform the following:
+* Pull metrics data from Openshift API
+* Store metrics data for future query
+* Provide outgoing route to access stored data
+* Provide API to query metrics with specific criteria
 
 ### Automated Deployment (in progress)
 We have implemented two separate deployment scripts. Over the course of our project we realized the difficulty of deploying observability without access to cluster admin account on Openshift which led to use having to manually modify helm charts and application deployment. As such, we have a script which deploys a general observability stack which sets up all portions with Grafana, Loki, Open Telemetry, Tempo. There are some minor bugs with Prometheus that should be sorted out soon so we are currently not able to deploy Prometheus fully.
