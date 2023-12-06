@@ -1,0 +1,122 @@
+USER-SUPPLIED VALUES: null
+chris_admin:
+  email: dev@babyMRI.org
+  username: chris
+cube:
+  config:
+    AUTH_LDAP: 'false'
+    CUBE_CELERY_POLL_INTERVAL: '5.0'
+    DJANGO_ALLOWED_HOSTS: '*'
+    DJANGO_CORS_ALLOWED_ORIGINS: ''
+    DJANGO_CORS_ALLOW_ALL_ORIGINS: 'true'
+    DJANGO_SECURE_PROXY_SSL_HEADER: 'HTTP_X_FORWARDED_PROTO,https'
+    DJANGO_USE_X_FORWARDED_HOST: 'true'
+  enablePodAffinityWorkaround: true
+  podAnnotations:
+    instrumentation.opentelemetry.io/inject-python: 'true'
+  server:
+    resources:
+      limits:
+        cpu: 1
+        memory: 4Gi
+      requests:
+        cpu: 1
+        memory: 4Gi
+    workers: 4
+  workerMains:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 2Gi
+      requests:
+        cpu: 500m
+        memory: 2Gi
+  workerPeriodic:
+    resources:
+      limits:
+        cpu: 250m
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 1Gi
+global:
+  storageClass: ocs-external-storagecluster-ceph-rbd
+pfcon:
+  description: New England Research Cloud - OpenShift
+  enabled: true
+  name: nerc
+  podAnnotations:
+    instrumentation.opentelemetry.io/inject-python: 'true'
+  pfcon:
+    podAnnotations:
+      instrumentation.opentelemetry.io/inject-python: 'true'
+    config:
+      innetwork: true
+      storageEnv: filesystem
+    resources:
+      limits:
+        cpu: 1
+        memory: 4Gi
+      requests:
+        cpu: 1
+        memory: 4Gi
+    workers: 4
+  pman:
+    config:
+      ENABLE_HOME_WORKAROUND: 'yes'
+      IGNORE_LIMITS: 'no'
+      JOB_LABELS: chrisproject.org/job=plugininstance
+      NODE_SELECTOR: kubernetes.io/hostname=wrk-88
+      REMOVE_JOBS: 'yes'
+    podAnnotations:
+      instrumentation.opentelemetry.io/inject-python: 'true'
+    resources:
+      limits:
+        cpu: 250m
+        memory: 4Gi
+      requests:
+        cpu: 250m
+        memory: 4Gi
+    setSecurityContext: false
+    workers: 4
+  storage:
+    accessModes:
+      - ReadWriteOnce
+    size: 32Gi
+postgresql:
+  architecture: standalone
+  auth:
+    database: chris
+    username: chris
+  primary:
+    containerSecurityContext:
+      enabled: false
+    persistence:
+      enabled: true
+      size: 4Gi
+    podSecurityContext:
+      enabled: false
+    resources:
+      limits:
+        cpu: 1
+        memory: 2Gi
+      requests:
+        cpu: 1
+        memory: 2Gi
+  shmVolume:
+    enabled: false
+  volumePermissions:
+    enabled: false
+rabbitmq:
+  auth:
+    password: chris1234
+    username: chris
+  containerSecurityContext:
+    enabled: false
+  persistence:
+    enabled: true
+    size: 2Gi
+  podSecurityContext:
+    enabled: false
+  volumePermissions:
+    enabled: false
