@@ -1,0 +1,188 @@
+# Example values.yaml suitable for deploying ChRIS backend on NERC OpenShift
+
+global:
+  # storage class to use for persistent volume claims
+  storageClass: "ocs-external-storagecluster-ceph-rbd"
+
+# ChRIS automatic admin account
+#####################
+
+chris_admin:
+  username: chris
+  email: dev@babyMRI.org
+  # optionally, provide an admin password. Otherwise, a random password will be created.
+  # password: 
+
+# ChRIS Backend
+#####################
+cube:
+  podAnnotations: {}
+
+  # Use inter-pod affinity as a workaround for using a ReadWriteOnce PersistentVolumeClaim
+  # necessary workaround for NERC OpenShift
+  enablePodAffinityWorkaround: true
+
+  # Configuration
+  #####################
+  config:
+    CUBE_CELERY_POLL_INTERVAL: "5.0"
+    # Disable HTTP server security settings so that things just work, damn it!
+    DJANGO_ALLOWED_HOSTS: "*"
+    DJANGO_CORS_ALLOW_ALL_ORIGINS: "true"
+    DJANGO_CORS_ALLOWED_ORIGINS: ""
+    # the two settings below tell CUBE to trust the OpenShift Router's HTTPs routes
+    DJANGO_SECURE_PROXY_SSL_HEADER: "HTTP_X_FORWARDED_PROTO,https"
+    DJANGO_USE_X_FORWARDED_HOST: "true"
+    AUTH_LDAP: "false"
+
+  # Resources
+  #####################
+  workerMains:
+    ## Resources for the main worker.
+    ## It requires a large memory allocation due to an inefficient implementation.
+    ## Recommended value is x4 the size of the largest anticipated plugin instance output directory.
+    resources:
+      requests:
+        memory: 2Gi
+        cpu: 500m
+      limits:
+        memory: 2Gi
+        cpu: 500m
+
+  workerPeriodic:
+    ## Resources for the periodic worker.
+    ## Default values should be okay.
+    resources:
+      requests:
+        memory: 1Gi
+        cpu: 250m
+      limits:
+        memory: 1Gi
+        cpu: 250m
+
+  server:
+    workers: 4
+    ## resources for the HTTP server (WSGI).
+    ## Default values should be okay.
+    resources:
+      requests:
+        memory: 4Gi
+        cpu: 1
+      limits:
+        memory: 4Gi
+        cpu: 1
+
+# Database
+#####################
+
+# [SUBCHART] PostgreSQL packaged by Bitnami
+# https://github.com/bitnami/charts/tree/main/bitnami/postgresql#parameters
+postgresql:
+  # no reason to change these values
+  auth:
+    database: "chris"
+    username: "chris"
+  architecture: standalone
+  primary:
+    # Primary database instance resource requests
+    resources:
+      requests:
+        memory: 2Gi
+        cpu: 1
+      limits:
+        memory: 2Gi
+        cpu: 1
+    persistence:
+      enabled: true
+      size: 4Gi
+    # Defer control of security configurations to OpenShift
+    podSecurityContext:
+      enabled: false
+    containerSecurityContext:
+      enabled: false
+  volumePermissions:
+    enabled: false
+  shmVolume:
+    enabled: false
+
+# [SUBCHART] RabbitMQ packaged by Bitnami
+# https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq#parameters
+rabbitmq:
+
+  # No reason to change these values.
+  #
+  # Whether or not to set a password for RabbitMQ depends on your threat model.
+  # The RabbitMQ service does not receive ingress traffic, the password appears
+  # here in values.yaml due to limitations of how Helm charts share variables
+  # with subcharts.
+  auth:
+    username: "chris"
+    password: "chris1234"
+
+  persistence:
+    enabled: true
+    size: 2Gi
+
+  # Defer control of security configurations to OpenShift
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false
+  volumePermissions:
+    enabled: false
+
+
+pfcon:
+  enabled: true
+
+  name: "nerc"
+  description: "New England Research Cloud - OpenShift"
+
+  # Storage space for CUBE files should be configured here.
+  # It is recommended to allocate as much space as possible for CUBE files.
+  storage:
+    size: 32Gi
+    accessModes: [ "ReadWriteOnce" ]
+
+  pfcon:
+    workers: 4
+    resources:
+      limits:
+        cpu: 1
+        memory: 4Gi
+      requests:
+        cpu: 1
+        memory: 4Gi
+
+    # pfcon configuration
+    # Recommended to keep as-is
+    config:
+      innetwork: true
+      storageEnv: filesystem
+
+  pman:
+    # It is unnecessary to increase pman's resources to above the minimum because
+    # pman doesn't do anything besides sending and receiving HTTP requests.
+    workers: 4
+    resources:
+      limits:
+        cpu: 250m
+        memory: 4Gi
+      requests:
+        cpu: 250m
+        memory: 4Gi
+
+    # pman configuration
+    # https://github.com/fnndsc/pman#environment-variables
+    # SECRET_KEY, CONTAINER_ENV, STORAGE_TYPE, VOLUME_NAME, and CONTAINER_USER are handled automaticallY
+    # Change these if you want.
+    config:
+      JOB_LABELS: chrisproject.org/job=plugininstance
+      ENABLE_HOME_WORKAROUND: "yes"
+      REMOVE_JOBS: "yes"
+      IGNORE_LIMITS: "no"
+
+    # Set securityContext of containers created by pman to have the same securityContext as .global.podSecurityContext
+    # or the default fnndsc/cube container user, so that the container user can write to the shared volume's filesystem.
+    # Should be disabled on OpenShift.
+    setSecurityContext: false
