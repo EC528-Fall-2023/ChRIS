@@ -17,7 +17,6 @@ autoscaling:
 containerSecurityContext: {}
 createConfigmap: true
 dashboardProviders: {}
-dashboards: {}
 dashboardsConfigMaps: {}
 # Datasources provisioning
 datasources:
@@ -29,7 +28,7 @@ datasources:
         type: loki
         access: proxy
         orgId: 1
-        url: http://172.30.125.252:3100
+        url: https://chris-loki-hosting-of-medical-image-analysis-platform-a88466.apps.shift.nerc.mghpcc.org
         isDefault: false
         jsonData:
           maxLines: 1000
@@ -57,7 +56,17 @@ datasources:
         url: http://tempo-new-hosting-of-medical-image-analysis-platform-a88466.apps.shift.nerc.mghpcc.org/
         basicAuth: false
         editable: true
-
+      - name: Postgres
+        type: postgres
+        url: 172.30.43.96
+        user: chris
+        secureJsonData:
+          password: kigO0366NW
+        jsonData:
+          database: chris
+          sslmode: 'disable'
+          timeInterval: 15s
+dashboards: {}
 deploymentStrategy:
   type: RollingUpdate
 downloadDashboards:
