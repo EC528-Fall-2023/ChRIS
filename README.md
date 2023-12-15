@@ -236,6 +236,7 @@ Our Grafana dashboard is split into three rows (groups of panels) for easy acces
 1. Plugin Metrics
 2. System Metrics
 3. System
+More in-depth Documentation on each panel, its configuration, and purpose can be found [here]([url](https://docs.google.com/document/d/1xAEXxO4ZIgSMIcy18iQHbfEJ1Av1hhoLwq5w3we1KdI/edit?usp=sharing))
 
 #### Row 1 (Plugin Metrics)
 ChRIS-specific plugin metrics for observing plugin resource use, trends in plugin use, and information that would be useful for system administrators to know about how ChRIS is being run
