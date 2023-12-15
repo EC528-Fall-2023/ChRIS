@@ -231,10 +231,9 @@ networkPolicy:
 nodeSelector: {}
 notifiers: {}
 persistence:
-  type: pvc
-  enabled: false
   accessModes:
   - ReadWriteOnce
+  enabled: true
   extraPvcLabels: {}
   finalizers:
   - kubernetes.io/pvc-protection
@@ -242,6 +241,7 @@ persistence:
     enabled: false
   size: 4Gi
   storageClassName: ocs-external-storagecluster-ceph-rbd
+  type: pvc
 plugins: []
 podDisruptionBudget: {}
 podPortName: grafana
