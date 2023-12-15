@@ -293,7 +293,7 @@
             "useBackend": false
           }
         ],
-        "title": "Average CPU, Memory Use, and Runtime by Plugin Image Type",
+        "title": "Average CPU, Memory Use, and Runtime by ChRIS Plugin Image Type(s)",
         "type": "timeseries"
       },
       {
@@ -393,7 +393,7 @@
             "useBackend": false
           }
         ],
-        "title": "Number of Plugins Ran by Image Type",
+        "title": "Number of ChRIS Plugin Image Type(s) Plugins Ran",
         "type": "timeseries"
       },
       {
@@ -905,6 +905,323 @@
             {
               "matcher": {
                 "id": "byName",
+                "options": "Plugin Image"
+              },
+              "properties": [
+                {
+                  "id": "custom.minWidth",
+                  "value": 250
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Plugin id"
+              },
+              "properties": [
+                {
+                  "id": "custom.minWidth",
+                  "value": 50
+                },
+                {
+                  "id": "custom.width",
+                  "value": 100
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Previous id"
+              },
+              "properties": [
+                {
+                  "id": "custom.minWidth",
+                  "value": 50
+                },
+                {
+                  "id": "custom.width",
+                  "value": 100
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 17
+        },
+        "id": 41,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "10.1.5",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${DS_CHRIS_POSTGRESQL}"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "SELECT\n  auth_user.username \"Username\",\n  plugins_plugin.dock_image AS \"Plugin Image\",\n  plugininstances_plugininstance.id AS \"Plugin id\",\n  plugininstances_plugininstance.previous_id AS \"Previous id\",\n  plugininstances_plugininstance.start_date AS \"Start date\"\nFROM plugininstances_plugininstance\nINNER JOIN auth_user ON auth_user.id = plugininstances_plugininstance.owner_id\nINNER JOIN plugins_plugin ON plugins_plugin.id = plugininstances_plugininstance.plugin_id\nWHERE plugininstances_plugininstance.start_date BETWEEN $__timeFrom() AND $__timeTo()\nORDER BY plugininstances_plugininstance.start_date DESC\nLIMIT 50",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            }
+          }
+        ],
+        "title": "Plugins Ran in Grafana Time Range",
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "left",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "noValue": "0",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "CPU Usage"
+              },
+              "properties": [
+                {
+                  "id": "unit",
+                  "value": "none"
+                },
+                {
+                  "id": "custom.axisPlacement",
+                  "value": "right"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Memory Usage (Working Set)"
+              },
+              "properties": [
+                {
+                  "id": "unit",
+                  "value": "decbytes"
+                },
+                {
+                  "id": "custom.axisPlacement",
+                  "value": "left"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Runtime"
+              },
+              "properties": [
+                {
+                  "id": "unit",
+                  "value": "s"
+                },
+                {
+                  "id": "custom.axisPlacement",
+                  "value": "auto"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 17
+        },
+        "id": 40,
+        "interval": "15s",
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "10.1.5",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_PROMETHEUS}"
+            },
+            "disableTextWrap": false,
+            "editorMode": "code",
+            "expr": "sum by (pod) (pod:container_cpu_usage:sum{pod=~\"chris-jid-$PluginPod.+\"})",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{pod}} CPU Usage",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_PROMETHEUS}"
+            },
+            "disableTextWrap": false,
+            "editorMode": "code",
+            "expr": "sum (   container_memory_working_set_bytes{pod=~\"chris-jid-$PluginPod.+\"} ) by(pod)",
+            "fullMetaSearch": false,
+            "hide": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "Memory Usage (Working Set)",
+            "range": true,
+            "refId": "B",
+            "useBackend": false
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_PROMETHEUS}"
+            },
+            "disableTextWrap": false,
+            "editorMode": "code",
+            "expr": "avg by (pod) (last_over_time(timestamp(kube_pod_start_time{namespace=\"hosting-of-medical-image-analysis-platform-a88466\", pod=~\"chris-jid-$PluginPod.+\"})[1w:]) - kube_pod_start_time{namespace=\"hosting-of-medical-image-analysis-platform-a88466\", pod=~\"chris-jid-$PluginPod.+\"})",
+            "fullMetaSearch": false,
+            "hide": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "Runtime",
+            "range": true,
+            "refId": "C",
+            "useBackend": false
+          }
+        ],
+        "title": "Average CPU, Memory Use, and Runtime by Pod Number Input",
+        "transformations": [],
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${DS_CHRIS_POSTGRESQL}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
                 "options": "Plugin"
               },
               "properties": [
@@ -932,7 +1249,7 @@
           "h": 8,
           "w": 6,
           "x": 0,
-          "y": 17
+          "y": 25
         },
         "id": 16,
         "options": {
@@ -1044,7 +1361,7 @@
           "h": 8,
           "w": 6,
           "x": 6,
-          "y": 17
+          "y": 25
         },
         "id": 24,
         "options": {
@@ -1160,7 +1477,7 @@
           "h": 8,
           "w": 12,
           "x": 12,
-          "y": 17
+          "y": 25
         },
         "id": 15,
         "options": {
@@ -1421,7 +1738,7 @@
           "h": 8,
           "w": 12,
           "x": 0,
-          "y": 25
+          "y": 33
         },
         "id": 23,
         "interval": "15s",
@@ -1557,7 +1874,7 @@
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 33
+          "y": 41
         },
         "id": 29,
         "panels": [],
@@ -1626,7 +1943,7 @@
           "h": 8,
           "w": 12,
           "x": 0,
-          "y": 34
+          "y": 42
         },
         "id": 36,
         "interval": "15s",
@@ -1726,7 +2043,7 @@
           "h": 8,
           "w": 12,
           "x": 12,
-          "y": 34
+          "y": 42
         },
         "id": 31,
         "options": {
@@ -1821,7 +2138,7 @@
           "h": 8,
           "w": 12,
           "x": 0,
-          "y": 42
+          "y": 50
         },
         "id": 32,
         "interval": "15s",
@@ -1917,7 +2234,7 @@
           "h": 8,
           "w": 12,
           "x": 12,
-          "y": 42
+          "y": 50
         },
         "id": 33,
         "interval": "15s",
@@ -2013,7 +2330,7 @@
           "h": 8,
           "w": 12,
           "x": 0,
-          "y": 50
+          "y": 58
         },
         "id": 34,
         "interval": "15s",
@@ -2110,7 +2427,7 @@
           "h": 8,
           "w": 12,
           "x": 12,
-          "y": 50
+          "y": 58
         },
         "id": 35,
         "options": {
@@ -2175,7 +2492,7 @@
           "h": 15,
           "w": 12,
           "x": 0,
-          "y": 58
+          "y": 66
         },
         "id": 37,
         "options": {
@@ -2244,8 +2561,104 @@
             "refId": "D"
           }
         ],
-        "title": "% of Total CPU Resources in Use",
+        "title": "% of Total CPU and Memory Resources in Use",
         "type": "gauge"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "noValue": "0",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 66
+        },
+        "id": 42,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_PROMETHEUS}"
+            },
+            "editorMode": "code",
+            "expr": "sum by (namespace,pod) ((container_cpu_cfs_throttled_periods_total{pod=~\"chris-jid.+\", container=~\"chris-jid.+\"} / container_cpu_cfs_periods_total{pod=~\"chris-jid.+\", }))",
+            "instant": false,
+            "legendFormat": "{{pod}}",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "CPU Throttling Percentage by Plugin Pod",
+        "type": "timeseries"
       },
       {
         "collapsed": false,
@@ -2253,7 +2666,7 @@
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 73
+          "y": 81
         },
         "id": 26,
         "panels": [],
@@ -2269,7 +2682,7 @@
           "h": 8,
           "w": 12,
           "x": 0,
-          "y": 74
+          "y": 82
         },
         "id": 19,
         "options": {
@@ -2308,7 +2721,7 @@
           "h": 8,
           "w": 12,
           "x": 12,
-          "y": 74
+          "y": 82
         },
         "id": 18,
         "options": {
@@ -2348,7 +2761,7 @@
           "h": 8,
           "w": 12,
           "x": 0,
-          "y": 82
+          "y": 90
         },
         "id": 28,
         "options": {
@@ -2404,17 +2817,36 @@
           "skipUrlSync": false,
           "sort": 1,
           "type": "query"
+        },
+        {
+          "current": {},
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_CHRIS_POSTGRESQL}"
+          },
+          "definition": "SELECT\n  plugininstances_plugininstance.id\nFROM plugininstances_plugininstance\nWHERE plugininstances_plugininstance.start_date BETWEEN $__timeFrom() AND $__timeTo()\nORDER BY plugininstances_plugininstance.start_date DESC\nLIMIT 50",
+          "hide": 0,
+          "includeAll": false,
+          "multi": false,
+          "name": "PluginPod",
+          "options": [],
+          "query": "SELECT\n  plugininstances_plugininstance.id\nFROM plugininstances_plugininstance\nWHERE plugininstances_plugininstance.start_date BETWEEN $__timeFrom() AND $__timeTo()\nORDER BY plugininstances_plugininstance.start_date DESC\nLIMIT 50",
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
         }
       ]
     },
     "time": {
-      "from": "2023-12-06T02:31:44.800Z",
-      "to": "2023-12-06T05:49:03.201Z"
+      "from": "2023-12-14T23:58:13.266Z",
+      "to": "2023-12-15T00:50:47.248Z"
     },
     "timepicker": {},
     "timezone": "",
     "title": "ChRIS Dashboard",
     "uid": "c994a710-00ca-4c7e-9b15-a7aae283c5e8",
-    "version": 63,
+    "version": 68,
     "weekStart": ""
   }

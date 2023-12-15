@@ -1,0 +1,23 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: hosting-of-medical-image-analysis-platform-a88466
+  name: grafana-ini
+rules:
+- apiGroups: [""]
+  resources: ["secrets", "configmaps"]
+  verbs: ["list", "get"]  # Add other verbs as necessary
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: grafana-connect-perms2
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: grafana-ini
+subjects:
+- kind: ServiceAccount
+  name: testfana2-grafana
