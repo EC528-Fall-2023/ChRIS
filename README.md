@@ -47,7 +47,7 @@ Final: https://docs.google.com/presentation/d/118gJM512Wck25joPERs0Wa2HoQq3fpU1f
 
 ## 1. Vision and Goals Of The Project
 
-The ultimate vision of this project is to transform ChRIS, a container scheduler for complex medical analysis tasks, into a highly observable and data-driven medical analysis platform, while maintaining simplicity for end users. We have implemented an observability stack for monitoring metrics about the ChRIS system such as CPU utilization for system admins maintaining the system in real-time, as well as metrics about the performance of individual ChRIS plugins. Additionally, we have a system in place to gather logs and traces of the general system which we are able to expose for use by system admins. All of this we have tested by deploying ChRIS to the New England Research Cloud (NERC) with the entire observability stack.
+The ultimate vision of this project is to transform ChRIS, a container scheduler for complex medical analysis tasks, into a highly observable and data-driven medical analysis platform, while maintaining simplicity for end users. We have implemented an observability stack for monitoring metrics about the ChRIS system such as CPU utilization for system admins maintaining the system in real-time, as well as metrics about the performance of individual ChRIS plugins. Additionally, we have a system in place to gather logs and traces of the general system which we are able to expose for use by system admins. All of this we have tested by deploying ChRIS to the New England Research Cloud (NERC) with an LGTM (Loki, Grafana, Tempo, Mimir) observability stack.
 
 High-Level Goals for improving ChRIS include:
 
@@ -64,7 +64,7 @@ Setting up a system such that its components emit meaningful traces, metrics and
 
 ## 2. End Users Of The Project
 
-ChRIS observability tools will be used by healthcare system administrators to provide active statistics on the performance of ChRIS’s backend and individual tasks in the ChRIS container scheduling system. They will mainly be used by expert users for the sake of improving and maintaining the efficient functionality of the ChRIS system during its operation, as well as allowing system administrators to track trends in how ChRIS is performing and being used. However, it my also be useful for the Medical employment sector in order to track the performance of their ChRIS plugins running medical data workflows, however interface for non-expert users is not yet implemented.
+ChRIS observability tools will be used by healthcare system administrators to provide active statistics on the performance of ChRIS’s backend and individual tasks in the ChRIS container scheduling system. They will mainly be used by expert users for the sake of monitoring and maintaining the efficient functionality of the ChRIS system during its operation, as well as allowing system administrators to track trends in how ChRIS is performing and being used. However, it my also be useful for the Medical employment sector in order to track the performance of their ChRIS plugins running medical data workflows, however interface for non-expert users is not yet implemented.
 
 ##### System administrators (Primary users):
 
@@ -90,6 +90,7 @@ The primary scope of the project will consist of the following:
     * Automatically collect and query generated logs from containers
     * Visualize collected data on the administrator’s interface
     * Create useful visualizations for gathering plugin metrics, system performance metrics, and system logs
+    * Create useful alarms that could be useful for system administrators
 * Learn how to utilize Openshift on the New England Research Cloud (NERC) and use that implementation with ChRIS
     * Deploy ChRIS on the NERC using OpenShift
     * Create a Helm project for deploying ChRIS and the observability stack on OpenShift
@@ -115,7 +116,7 @@ Our observability stack adopts the observability stack paradigm for collecting a
 
 - #### Tempo: Tempo is a high-volume tracing backend which efficiently implements distributed tracing on a large scale without the need for specialized clusters. Tempo also allows for efficient capture and storage of individual, exact traces.
 
-- #### OpenTelemetry: OpenTelemetry provides a single, open-source standard for instrumenting, generating, collecting and exporting telemetry data (logs, metrics, traces). OpenShift on NERC has pre-installed OpenTelemetry auto-instrumentation and collection operators, which can be connected to other tools in our deployed observability stack, such as Prometheus and Tempo, for further processing.
+- #### OpenTelemetry: OpenTelemetry provides a single, open-source standard for instrumenting, generating, collecting and exporting telemetry data (logs, metrics, traces). The OpenShift Operator on NERC has pre-installed OpenTelemetry auto-instrumentation and collection operators, which can be connected to Tempo for processing traces.
 
 - #### Prometheus: Prometheus collects and stores its metrics as time series data, i.e. metrics information is stored with the timestamp at which it was recorded, alongside optional key-value pairs called labels which can be sent to Grafana for visualization.
 
@@ -132,7 +133,7 @@ A big part of the project will also be testing and automating the deployment of 
 
 - ##### Helm: Helm is a software packaging manager that makes it easier to deploy applications to OpenShift clusters. We have created a collection of helm projects which are united in one script which automates the deployment of ChRIS and the observability stack onto OpenShift for ease of deployment to the NERC or similar Openshift environment.
 
-OpenShift on NERC possesses two tools and operators that we use directly in our observability stack; an in-built Prometheus tool and the OpenTelemetry operator. The OpenShift Prometheus tool allows us to scrape simpler metrics such as CPU and memory usage which can then be exported to our deployed Grafana tool for display to our users. However, it does not collect more detailed metrics or HTTP requests, hence in the future it would be good to deploy a custom instance of Prometheus which will allow us to do this. We also use OpenTelemetry auto-instrumentation and collector tools to allow us to collect and aggregate all telemetry data (i.e. logs and traces in particular), which can then be exported to the other tools on our observability stack.
+OpenShift on NERC possesses two tools and operators that we use directly in our observability stack; an in-built Prometheus tool and the OpenTelemetry operator. The OpenShift Prometheus tool allows us to scrape simpler metrics such as CPU and memory usage which can then be exported to our deployed Grafana tool for display to our users. However, it does not collect more detailed metrics or HTTP requests, hence in the future it would be good to deploy a custom instance of Prometheus which will allow us to do this (we were unable to do so because of NERC permissions issues preventing us from deploying the Promtail agent). We also use OpenTelemetry auto-instrumentation and collector tools to allow us to collect and aggregate all telemetry data (i.e. logs and traces in particular), which can then be exported to the other tools on our observability stack.
 
 
 ![alt_text](./newdiag.JPG "Figure 1: Diagram of What Observability Stack Will Look Like in the NERC")
@@ -154,11 +155,11 @@ The minimum viable product is:
 * The version of ChRIS should also have attached observability tools able to run using the new Openshift applications
 * Implement an automated alert systems that notifies system admins of anomalies and breaks in the system (but not for every plugin failure)
 * Gather and display telemetry data (logs, metrics, traces)
-* Bash scripts containing configuration for deploying ChRIS on Openshift and observability stack
+* Document the configuration for deploying ChRIS on Openshift and observability stack components
+* Explore other observability options and possible optimizations, such as OpenObserve, ELK observability stack, etc.
 
 Stretch goals are:
 
-* Explore other observability options and possible optimizations, such as OpenObserve, ELK observability stack, etc.
 * Create a user-friendly frontend on top of the observability stack
 * Create an automated testing suite for analyzing the performance of the observability stack itself
 * Gather traces for debugging ChRIS's existing problem with overhead delays
@@ -181,8 +182,8 @@ Stretch goals are:
 
 ### Release #3 (Oct 26 - Nov 8):
 
-* Deployed the rest of the Observability stack including Loki and Tempo
-* Connected observability stack to gather metrics and logs
+* Deployed Tempo on NERC
+* Connected observability stack to gather and visualize metrics and logs
 
 * Defined what it looks like when a plugin fails (in metrics and logs) and set up alerting system for failing plugins
 * Defined what metrics are meaningful to observe and set up visualizations on Grafana for them
@@ -213,7 +214,8 @@ Stretch goals are:
 ## 7. Final Product
 
 ### Deploying ChRIS and the LGTM Observability Stack to the New England Research Cloud:
-(overview of the difficulties we encountered with this)
+Due to permissions issues when trying to deploy components of the observability stack on the NERC, much of the project revolved around trying to bypass these permissions issues to be able to have a full observability stack on the NERC. The usual methods of helm charts and OpenShift Operators for installing observability components didn't work because some of the helm charts used Custom Resource Definitions (CRDs) which we didn't have permission to deploy as non-cluster admins, and the OpenShift Operators could only be added by cluster admins (we were told that submitting Operator requests could take at least a month). We were successfully able to deploy our own instances of Grafana, Tempo (using the built-in OpenShift OpenTelemetry Operator), and Loki (using our own custom collector). The reason we couldn't deploy our own instance of Prometheus and had to custom script our own log collector was because we didn't have the necessary permissions to deploy the Promtail agent for Prometheus and Loki. For Prometheus, we instead used the built-in OpenShift Prometheus instance (although this meant we couldn't collect custom logs, set custom labels, and only had access to the query, query_range, and rules parts of the Prometheus API).
+
 
 #### Loki
 For the purpose of collecting logs, we are using a monolithic Loki instance, which is a deployment mode in which all microservices associated with Loki run inside a single process as a single binary or Docker image. 
@@ -223,7 +225,27 @@ As a substitution, we have developed a log parsing Python script that leverages 
 
 ![alt_text](./lokiparser.png "Figure 2: Loki Parser Diagram")
 
+### OpenTelemetry (Traces generation & collection):
+Our Observability stack implemented an auto-instrumentation subsystem & traces collection subsystem via OpenShift's OpenTelemetry Operator (which came as a part of our NERC instance). As part of the project, it enables the ChRIS system to generate traces and collect them for better observability. This subsystem can perform the following:
+* Auto-instrument selected pod that annotated with a specific annotation
+* Instrumented pod generates traces per request with related information
+* Collector that collects & processes all the traces from instrumented pods
 
+### Tempo (Traces storage & query):
+Our Observability stack implemented the traces storage & query subsystem via Tempo. As part of the project, it enables the ChRIS system to store traces and provide query API and Route for Grafana. This subsystem can perform the following:
+* Accept Traces data from OpenTelemetry collector via grpc protocol
+* Store Traces for future query
+* Provide outgoing route to access stored data
+* Provide API to query traces with specific criteria
+
+Traces are typically used for debugging the system (not for real-time system monitoring), so this aspect of the observability stack should only be active and used for debugging traces of the system.
+
+### Prometheus (Metrics storage & query)
+Our Observability stack implemented the metrics storage & query subsystem via Prometheus. Because we didn't have the permissions to deploy Promtail, we were unable to deploy a custom instance of Prometheus. Instead, we used the built-in Prometheus instance that OpenShift uses for its Observability capabilities so that we could gather basic Kubernetes metrics about the system running on NERC. It enables the Observability stack to store metrics and provide query API and Route for Grafana. This subsystem can perform the following:
+* Pull metrics data from Openshift API
+* Store metrics data for future query
+* Provide outgoing route to access stored data
+* Provide API to query metrics with specific criteria
 
 ### Grafana Dashboard:
 Our Observability stack features Grafana, the data visualization platform that is able to connect to the previously mentioned components such as Loki and Prometheus. As a part of our project, we ingest the metrics, logs, and traces and create meaningful visualizations and alerting that is able to perform the following:
@@ -294,30 +316,19 @@ Panels showing the logs generated by the ChRIS system and gathered by Loki. Thes
 
 <img width="1654" alt="Screen Shot 2023-12-05 at 11 15 24 PM" src="https://github.com/EC528-Fall-2023/ChRIS/assets/98369076/b0c74c4e-ae6e-467b-90e0-c182d6f192c2">
 
-### OpenTelemetry (Traces generation & collection):
-Our Observability stack implemented an auto-instrumentation subsystem & traces collection subsystem via OpenTelemetry. As part of the project, it enables the ChRIS system to generate traces and collect them for better observability. This subsystem can perform the following:
-* Auto-instrument selected pod that annotated with a specific annotation
-* Instrumented pod generates traces per request with related information
-* Collector that collects & processes all the traces from instrumented pods
+#### Grafana Alerts
+We also created two Grafana alerts that could be useful for system administrators. To do so, we enabled Grafana to connect to the Gmail SMTP server so that it could send emails from a configured account in the helm chart. When the alert rules are fired (e.g. some metric has gone over a certain threshold), then Grafana will send an email alert to configured destination users about the alerts.
 
-### Tempo (Traces storage & query):
-Our Observability stack implemented the traces storage & query subsystem via Tempo. As part of the project, it enables the ChRIS system to store traces and provide query API and Route for Grafana. This subsystem can perform the following:
-* Accept Traces data from OpenTelemetry collector via grpc protocol
-* Store Traces for future query
-* Provide outgoing route to access stored data
-* Provide API to query traces with specific criteria
+**Alert 1: Plugin Returned with an Error Code**
+This alert searches logs received by Loki in the past 5 minutes to check if any show that a plugin has returned a ChRIS plugin error code (e.g. CODE01). These are important because they are system-level errors that are of interest to system admins (not every plugin failure returns a code). For example, CODE01 occurs when ChRIS fails to schedule a plugin. This alert allows for system administrators to be alerted on any plugins that have returned these kinds of error codes.
 
-### Prometheus (Metrics storage & query)
-Our Observability stack implemented the metrics storage & query subsystem via Prometheus. It enables the Observability stack to store metrics and provide query API and Route for Grafana. This subsystem can perform the following:
-* Pull metrics data from Openshift API
-* Store metrics data for future query
-* Provide outgoing route to access stored data
-* Provide API to query metrics with specific criteria
+**Alert 2: CPU Throttling Exceeds 50% for 1 minute**
+This alert fires when a plugin pod has a CPU throttling percentage of over 50% over the last minute. This alert was created based on a request by one of our mentors saying that this is information he would like to be alerted on for plugins.
 
-### Automated Deployment (in progress)
+### ChRIS and Observability Stack Component Deployment
 We have implemented two separate deployment scripts. Over the course of our project we realized the difficulty of deploying observability without access to cluster admin account on Openshift which led to use having to manually modify helm charts and application deployment. As such, we have a script which deploys a general observability stack which sets up all portions with Grafana, Loki, Open Telemetry, Tempo. There are some minor bugs with Prometheus that should be sorted out soon so we are currently not able to deploy Prometheus fully.
 The current auto observability deployment consists of two scripts:
-# observability.bash: 
+#### observability.bash: 
 This script launches the entire observability stack onto an openshift environment and all that it requires are the following:
 * Openshift command line command access which can be done through the oc login command
 * Installation of helm
@@ -332,7 +343,7 @@ The way you run the script is the following:
 
 To uninstall, just run uninstall.bash -a app_name
 
-# chris_deploy.bash:
+#### chris_deploy.bash:
 This script launches ChRIS on an Openshift environment with an option to automatically configure instrumentation for open telemetry. The requirements are as follows:
 * Openshift command line command access which can be done through the oc login command
 * Installation of helm
