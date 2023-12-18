@@ -34,15 +34,19 @@
 ## Table of Contents
 
 1. [Vision and Goals of the Project](#1-vision-and-goals-of-the-project)
-2. [Users of the Project](#2-userspersonas-of-the-project)
+2. [Users of the Project](#2-users-of-the-project)
 3. [Scope and Features of the Project](#3-scope-and-features-of-the-project)
 4. [Solution Concept](#4-solution-concept)
    - [Global Architecture of the Project](#global-architecture-of-the-project)
    - [Development of Observability Stack](#development-of-observability-stack)
-   - [Deployment on the New England Research Cloud (NERC)](#deployment-on-the-new-england-research-cloud-nerc)
+   - [Deployment on the New England Research Cloud (NERC)](#deployment-to-the-new-england-research-cloud-nerc)
    - [Design Implications and Discussion](#design-implications-and-discussion)
 5. [Acceptance Criteria](#5-acceptance-criteria)
 6. [Release Planning](#6-release-planning)
+7. [Final Product](#7-final-product)
+   - [Deploying ChRIS and the LGTM Observability Stack to the New England Research Cloud](#deploying-chris-and-the-lgtm-observability-stack-to-the-new-england-research-cloud)
+   - [Grafana Dashboard](#grafana-dashboard)
+   - [ChRIS and Observability Stack Component Deployment](#chris-and-observability-stack-component-deployment)
 
 ---
 
@@ -226,13 +230,13 @@ As a substitution, we have developed a log parsing Python script that leverages 
 
 ![alt_text](./lokiparser.png "Figure 2: Loki Parser Diagram")
 
-### OpenTelemetry (Traces generation & collection):
+#### OpenTelemetry (Traces generation & collection):
 Our Observability stack implemented an auto-instrumentation subsystem & traces collection subsystem via OpenShift's OpenTelemetry Operator (which came as a part of our NERC instance). As part of the project, it enables the ChRIS system to generate traces and collect them for better observability. This subsystem can perform the following:
 * Auto-instrument selected pod that annotated with a specific annotation
 * Instrumented pod generates traces per request with related information
 * Collector that collects & processes all the traces from instrumented pods
 
-### Tempo (Traces storage & query):
+#### Tempo (Traces storage & query):
 Our Observability stack implemented the traces storage & query subsystem via Tempo. As part of the project, it enables the ChRIS system to store traces and provide query API and Route for Grafana. This subsystem can perform the following:
 * Accept Traces data from OpenTelemetry collector via grpc protocol
 * Store Traces for future query
@@ -241,7 +245,7 @@ Our Observability stack implemented the traces storage & query subsystem via Tem
 
 Traces are typically used for debugging the system (not for real-time system monitoring), so this aspect of the observability stack should only be active and used for debugging traces of the system.
 
-### Prometheus (Metrics storage & query)
+#### Prometheus (Metrics storage & query)
 Our Observability stack implemented the metrics storage & query subsystem via Prometheus. Because we didn't have the permissions to deploy Promtail, we were unable to deploy a custom instance of Prometheus. Instead, we used the built-in Prometheus instance that OpenShift uses for its Observability capabilities so that we could gather basic Kubernetes metrics about the system running on NERC. It enables the Observability stack to store metrics and provide query API and Route for Grafana. This subsystem can perform the following:
 * Pull metrics data from Openshift API
 * Store metrics data for future query
