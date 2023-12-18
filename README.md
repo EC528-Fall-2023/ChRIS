@@ -152,6 +152,19 @@ OpenShift on NERC possesses two tools and operators that we use directly in our 
 * Allow for easily understandable visualization of ChRIS system metrics for monitoring and system administration purposes
 * Generate more data comparing the efficiency of different observability stack implementations, especially as related to observing applications with similar container management features as ChRIS
 
+### Design Implications and Discussion
+
+#### LGTM Stack
+As mentioned in a previous section, we chose to use the LGTM (Loki, Grafana, Tempo, Mimir) observability stack because we found that it best suits the needs of the project as well as allowing us to get more experience working with one of the most commonly used observability stacks. We chose to use Prometheus instead of Mimir because we read that Prometheus is better suited for real-time monitoring and alerting of systems. The main implications of choosing LGTM stack are that we have more access to documentation on deploying these tools, as well as some built-in LGTM capabilities in OpenShift such as their Prometheus instance.
+
+#### Using OpenShift's Built-in Prometheus
+One of the big design choices we had to make for the project was not deploying our own Prometheus instance. Because of the many permissions issues we ran into while trying to deploy our own instances of the LGTM stack, we were able to deploy Prometheus but could not deploy the Promtail agent (what ships logs / metrics to Grafana). This meant that we were unable to gather metrics using this instance, so we ultimately decided to use OpenShift's built-in Prometheus to gather metrics. This impacted our project because this meant we couldn't collect custom, ChRIS-specific metrics and labels. For example, if we were able to add our own labels for 'username' for users running plugins, then we would be able to collect information on resources used by each user.
+
+#### Using Custom Log Parser
+Similar to the decision to use the built-in Prometheus instance, we also couldn't use Loki because we didn't have the permissions to deploy Promtail. We were successfully able to deploy our own custom log parser script as a pod that's querying the Kubernetes API for logs, using a Redis database to ensure that logs don't get repeated. This custom solution successfully gathers logs and sends them to Loki, however a consequence of this is that this solution is not scalable for larger systems (and if the parser goes down, the logs won't get collected). This was meant mainly as a custom solution for us to get around the lack of permissions to continue exposing information useful to the project.
+
+#### 
+
 ## 5. Acceptance Criteria
 
 The minimum viable product is:
