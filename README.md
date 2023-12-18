@@ -41,7 +41,7 @@
    - [Development of Observability Stack](#development-of-observability-stack)
    - [Deployment on the New England Research Cloud (NERC)](#deployment-on-the-new-england-research-cloud-nerc)
    - [Design Implications and Discussion](#design-implications-and-discussion)
-5. [Minimum Acceptance Criteria](#5-minimum-acceptance-criteria)
+5. [Acceptance Criteria](#5-acceptance-criteria)
 6. [Release Planning](#6-release-planning)
 
 ---
